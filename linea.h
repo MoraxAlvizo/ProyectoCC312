@@ -4,14 +4,17 @@
 #include<GL/glut.h>
 #include<stdio.h>
 #include<stdbool.h>
+#include<math.h>
 
 
+int xi, yi;
+int xf, yf;
 
 void init(void)
 {
    glClearColor(1.0, 1.0, 1.0, 0.0); // color de la ventana, blanco
    glMatrixMode(GL_PROJECTION);      //  proyección de la imagen en la ventana de visualización
-   gluOrtho2D(0.0, 200.0, 0.0, 150.0); //  proyección en 2D
+   gluOrtho2D(0.0, 1000.0, 0.0, 800.0); //  proyección en 2D
 }
 
 void lineSegment(void)
@@ -44,7 +47,7 @@ void dibujarPixel(GLint x, GLint y){
 void dibujarLinea(GLint x1,GLint y1,GLint x2,GLint y2)
 {
 
-    GLint xtemp, ytemp,dx,dy,x,y,xFin,p;
+    GLint xtemp,ytemp,dx,dy,p;
     GLfloat m;
 
     if(x1 > x2){
@@ -55,7 +58,6 @@ void dibujarLinea(GLint x1,GLint y1,GLint x2,GLint y2)
         ytemp = y1;
         y1    = y2;
         y2    = ytemp;
-
     }
 
     if(x1 == x2){
@@ -98,7 +100,6 @@ void dibujarLinea(GLint x1,GLint y1,GLint x2,GLint y2)
                         p = p + 2 *(dy - dx);
                     }
                     dibujarPixel(x1,y1);
-
                 }
             }
             else{
@@ -168,8 +169,28 @@ void dibujarLinea(GLint x1,GLint y1,GLint x2,GLint y2)
         }
 
     }// fin del else
+    glFlush();
 
+}// fin del dibujar linea
 
+void dibujarEstrella(){
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(1.0, 0.0, 0.0);
 
+    dibujarLinea(10, 	10, 	190, 	10  );
+    dibujarLinea(190, 	10, 	190, 	140 );
+    dibujarLinea(190, 	140, 	10, 	140 );
+    dibujarLinea(10, 	140, 	10, 	10  );
+    dibujarLinea(20, 	20, 	100, 	130 );
+    dibujarLinea(100, 	130, 	180, 	20  );
+    dibujarLinea(180, 	20, 	15, 	100 );
+    dibujarLinea(15, 	100, 	185, 	100 );
+    dibujarLinea(185, 	100, 	20, 	20  );
+    dibujarLinea(xi,yi,xf,yf);
+
+    glFlush();
 }
+
+
+
 #endif // LINEA_H_INCLUDED

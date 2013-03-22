@@ -1,0 +1,38 @@
+void puntos(int xc, int yc, int x, int y, int c)
+{
+
+	pixel(xc + x, yc + y, c);
+	pixel(xc - x, yc + y, c);
+	pixel(xc + x, yc - y, c);
+	pixel(xc - x, yc - y, c);
+	pixel(xc + x, yc + y, c);
+	pixel(xc - x, yc + y, c);
+	pixel(xc + x, yc - y, c);
+	pixel(xc - x, yc - y, c);
+}
+
+void circulo(int xc, int yc, int radio, int color)
+{
+
+	int x,y,p;
+	x = 0;
+	y = radio;
+	puntos(xc, yc, x, y, color);
+	p = 1 - radio;
+	while(x<y)
+	{
+		if(p<0)
+		{
+			x++;
+			p +=  2 * x + 1;
+		}
+		else{
+			x++;			
+			y--;
+			p += 2 * (x - y) + 1;
+		}
+		puntos(xc, yc, x, y, color);
+
+	}
+
+}

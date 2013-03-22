@@ -2,14 +2,10 @@
 1362838145 source:/home/omar/Documents/Code::Blocks Workspace/ProyectoCC312/main.c
 	<GL/glut.h>
 
-1362976508 source:/home/omar/Documents/Code::Blocks Workspace/ProyectoCC312/main.cpp
+1363991024 source:/home/omar/Documents/Code::Blocks Workspace/ProyectoCC312/main.cpp
 	<GL/glut.h>
 	"linea.h"
-	<stdio.h>
-	<stdlib.h>
-	<SDL.h>
-	<GL/gl.h>
-	<GL/glu.h>
+	"Eventos.h"
 
 1362843314 source:/home/omar/Documents/Code::Blocks Workspace/ProyectoCC312/linea.cpp
 	<iostream>
@@ -17,10 +13,11 @@
 	<GL/glut.h>
 	"linea.h"
 
-1362976882 /home/omar/Documents/Code::Blocks Workspace/ProyectoCC312/linea.h
+1363991523 /home/omar/Documents/Code::Blocks Workspace/ProyectoCC312/linea.h
 	<GL/glut.h>
 	<stdio.h>
 	<stdbool.h>
+	<math.h>
 
 1343821655 /usr/include/SDL/SDL.h
 	"SDL_main.h"
@@ -202,4 +199,7 @@
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
+
+1363991715 /home/omar/Documents/Code::Blocks Workspace/ProyectoCC312/Eventos.h
+	"linea.h"
 
