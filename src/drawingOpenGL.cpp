@@ -4,11 +4,23 @@ int lastx = 0, lasty = 0;
 
 DrawingOpenGL::DrawingOpenGL()
 {
-    // Configure OpenGL-capable visual.
+
+    // ==============================
+    //  Lienzo OpenGL
+    // ==============================
+
     Glib::RefPtr<Gdk::GL::Config> glconfig;
     this->drawing = false;
-    this->add_events(Gdk::BUTTON_PRESS_MASK | Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_RELEASE_MASK | Gdk::BUTTON_MOTION_MASK);
-    glconfig = Gdk::GL::Config::create(Gdk::GL::MODE_RGB | Gdk::GL::MODE_DOUBLE);
+    this->primerPintado = true;
+    this->add_events(Gdk::BUTTON_PRESS_MASK |
+                     Gdk::BUTTON_RELEASE_MASK |
+                     Gdk::BUTTON1_MOTION_MASK |
+                     Gdk::EXPOSURE_MASK);
+    glconfig = Gdk::GL::Config::create(Gdk::GL::MODE_RGB | Gdk::GL::MODE_SINGLE);
+
+    if( !glconfig )
+        g_assert_not_reached();
+
     set_gl_capability(glconfig);
 
 }
@@ -18,27 +30,69 @@ DrawingOpenGL::~DrawingOpenGL()
 
 }
 
+
 void DrawingOpenGL::on_realize()
 {
   // We need to call the base on_realize()
     Gtk::DrawingArea::on_realize();
-    this-> glwindow = get_gl_drawable();
 
-      // *** OpenGL BEGIN ***
-    if (!glwindow->gl_begin(get_gl_context()))
-        return;
+}
 
-	glClearColor(1.0, 1.0, 1.0, 0.0); // color de la ventana, blanco
-    glMatrixMode(GL_PROJECTION);      //  proyección de la imagen en la ventana de visualización
-    gluOrtho2D(0.0,  get_width(), 0.0,get_height()); //  proyección en 2D
+bool DrawingOpenGL::on_configure_event(GdkEventConfigure*event){
+
+    Glib::RefPtr<Gdk::GL::Context>  context;
+	Glib::RefPtr<Gdk::GL::Drawable> gldrawable;
+    gint w = get_width(), h = get_height();
+
+	context = get_gl_context();
+	gldrawable = get_gl_drawable();
+
+    gldrawable->gl_begin(context);
+
+	glLoadIdentity();
+	glViewport (0, 0, w, h);
+	glClearColor(1.0, 1.0, 1.0, 0.0);
+	glPointSize(2);
+	//glColor3f(color.red, color.green, color.blue);
+
+	glMatrixMode(GL_PROJECTION);
+
+	gluOrtho2D(0.0, w, 0.0, h);
+
+	//pixelBase = (GLubyte*)malloc(sizeof(GLubyte));
+	//siguientePixel = (GLubyte*)malloc(sizeof(GLubyte));
+	//colorAsignado = (GLubyte*)malloc(sizeof(GLubyte));
+    glFlush();
+	gldrawable->gl_end();
+
+	return TRUE;
+
 }
 
 bool DrawingOpenGL::on_expose_event(GdkEventExpose* event)
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-    glwindow->swap_buffers();
+    Glib::RefPtr<Gdk::GL::Context>  context;
+	Glib::RefPtr<Gdk::GL::Drawable> gldrawable;
+	gint w = get_width(), h = get_height();
 
-    return true;
+	context = get_gl_context();
+	gldrawable = get_gl_drawable();
+
+	if (!gldrawable->gl_begin(context)){
+		g_assert_not_reached ();
+	}
+
+	if(primerPintado){
+		glClear(GL_COLOR_BUFFER_BIT);
+		primerPintado = false;
+		//crear_nuevo_buffer_pixeles();
+		glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, lienzo);
+	}else{
+		glDrawPixels(w, h, GL_RGB, GL_UNSIGNED_BYTE, lienzo);
+	}
+    glFlush();
+	gldrawable -> gl_end();
+	return true;
 }
 
 bool DrawingOpenGL::on_button_press_event(GdkEventButton* event) {
@@ -51,16 +105,15 @@ bool DrawingOpenGL::on_button_press_event(GdkEventButton* event) {
 
 bool DrawingOpenGL::on_motion_notify_event(GdkEventMotion* event) {
     //Eventos del mouse
-    if(this->drawing && this->get_is_drawable ()){
-        if(lastx != event->x || lasty != event->y){
-            glDrawPixels(ANCHO,ALTO,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
-            glColor3f(1.0, 0.0, 0.0);
-            linea(this->x, ALTO-this->y, event->x, ALTO-event->y);
-            glwindow->swap_buffers();
+    if(event->state & GDK_BUTTON1_MASK){
+        glDrawPixels(ANCHO,ALTO,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
+        glColor3f(1.0, 0.0, 0.0);
+        linea(this->x, ALTO-this->y, event->x, ALTO-event->y);
+        glFlush();
 
-            lastx = event->x;
-            lasty = event->y;
-        }
+        lastx = event->x;
+        lasty = event->y;
+
     }
 
     return true;

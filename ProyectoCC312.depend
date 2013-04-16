@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1365720606 source:/home/omar/Documents/ProyectoCC312/main.cpp
+	<gtkmm.h>
+	<gtkglmm.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	"include/drawingOpenGL.h"
+	"include/App.h"
+
+1365720606 /home/omar/Documents/ProyectoCC312/include/drawingOpenGL.h
+	<gtkmm.h>
+	<gtkglmm.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1365720606 /home/omar/Documents/ProyectoCC312/include/App.h
+	<gtkmm.h>
+	<gtkglmm.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	"drawingOpenGL.h"
+

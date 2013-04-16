@@ -18,6 +18,7 @@ class DrawingOpenGL :
     public:
         DrawingOpenGL();
         virtual ~DrawingOpenGL();
+        bool primerPintado;
         int x,y,x1,y1;
 
 
@@ -25,13 +26,14 @@ class DrawingOpenGL :
         //atributos
         bool drawing;
         int lienzo[ANCHO][ALTO];
-        Glib::RefPtr<Gdk::GL::Drawable> glwindow;
 
         void on_realize();
-        bool on_expose_event(GdkEventExpose* event);
-        bool on_button_press_event(GdkEventButton* event);
-        bool on_motion_notify_event(GdkEventMotion* event);
-        bool on_button_release_event(GdkEventButton* event);
+        virtual bool on_expose_event(GdkEventExpose* event);
+        virtual bool on_button_press_event(GdkEventButton* event);
+        virtual bool on_motion_notify_event(GdkEventMotion* event);
+        virtual bool on_button_release_event(GdkEventButton* event);
+        virtual bool on_configure_event (GdkEventConfigure*event);
+
         void linea(int x, int y, int xf, int yf);
 
 };
