@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1366085196 source:/home/omar/Documents/ProyectoCC312/main.cpp
+1366420958 source:/home/omar/Documents/ProyectoCC312/main.cpp
 	<gtkmm.h>
 	<gtkglmm.h>
 	<GL/gl.h>
@@ -5647,22 +5647,49 @@
 	<gtkmm/drawingarea.h>
 	<gtkmm/gl/widget.h>
 
-1366085428 /home/omar/Documents/ProyectoCC312/include/drawingOpenGL.h
+1366464697 /home/omar/Documents/ProyectoCC312/include/drawingOpenGL.h
 	<gtkmm.h>
 	<gtkglmm.h>
 	<GL/gl.h>
 	<GL/glu.h>
+	"ToolsMenu.h"
+	"Point.h"
 
-1365720606 /home/omar/Documents/ProyectoCC312/include/App.h
+1366407555 /home/omar/Documents/ProyectoCC312/include/App.h
 	<gtkmm.h>
 	<gtkglmm.h>
 	<GL/gl.h>
 	<GL/glu.h>
+	"ToolsMenu.h"
 	"drawingOpenGL.h"
 
-1365720606 source:/home/omar/Documents/ProyectoCC312/src/App.cpp
+1366411505 source:/home/omar/Documents/ProyectoCC312/src/App.cpp
 	"../include/App.h"
 
-1366147250 source:/home/omar/Documents/ProyectoCC312/src/drawingOpenGL.cpp
+1366428668 source:/home/omar/Documents/ProyectoCC312/src/drawingOpenGL.cpp
 	"../include/drawingOpenGL.h"
+
+1366463802 source:/home/omar/Documents/ProyectoCC312/src/ToolsMenu.cpp
+	"../include/ToolsMenu.h"
+
+1366463802 /home/omar/Documents/ProyectoCC312/include/ToolsMenu.h
+	<gtkmm.h>
+	<gtkglmm.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	"Line.h"
+
+1366402731 /home/omar/Documents/ProyectoCC312/include/Line.h
+	<GL/gl.h>
+	<GL/glu.h>
+	<iostream>
+	<cmath>
+	"Point.h"
+
+1366423830 /home/omar/Documents/ProyectoCC312/include/Point.h
+	<GL/gl.h>
+	<GL/glu.h>
+
+1366421561 source:/home/omar/Documents/ProyectoCC312/src/Point.cpp
+	"../include/Point.h"
 

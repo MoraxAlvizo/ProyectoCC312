@@ -39,9 +39,13 @@
 			<Add option="`pkg-config --libs gtkglextmm-1.2`" />
 		</Linker>
 		<Unit filename="include/App.h" />
+		<Unit filename="include/Point.h" />
+		<Unit filename="include/ToolsMenu.h" />
 		<Unit filename="include/drawingOpenGL.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/App.cpp" />
+		<Unit filename="src/Point.cpp" />
+		<Unit filename="src/ToolsMenu.cpp" />
 		<Unit filename="src/drawingOpenGL.cpp" />
 		<Extensions>
 			<code_completion />

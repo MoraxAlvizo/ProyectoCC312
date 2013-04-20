@@ -5,6 +5,7 @@
 #include <gtkglmm.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "ToolsMenu.h"
 #include "drawingOpenGL.h"
 
 
@@ -22,8 +23,9 @@ protected:
   // member widgets:
   DrawingOpenGL GL;
 
-  Gtk::VBox box;
+  Gtk::HBox box;
   Gtk::Button buttonQuit;
+  ToolsMenu toolsMenu;
 };
 
 
