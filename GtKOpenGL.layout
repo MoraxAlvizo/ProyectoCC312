@@ -8,22 +8,22 @@
 		<Cursor position="409" topLine="0" />
 	</File>
 	<File name="include/ToolsMenu.h" open="1" top="0" tabpos="6">
-		<Cursor position="1064" topLine="26" />
+		<Cursor position="1064" topLine="23" />
 	</File>
 	<File name="include/drawingOpenGL.h" open="1" top="0" tabpos="2">
-		<Cursor position="1655" topLine="46" />
+		<Cursor position="1655" topLine="30" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="18" topLine="0" />
 	</File>
 	<File name="src/App.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="579" topLine="9" />
+		<Cursor position="579" topLine="0" />
 	</File>
 	<File name="src/Point.cpp" open="1" top="0" tabpos="9">
 		<Cursor position="349" topLine="24" />
 	</File>
 	<File name="src/ToolsMenu.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="1507" topLine="74" />
+		<Cursor position="1507" topLine="57" />
 	</File>
 	<File name="src/drawingOpenGL.cpp" open="1" top="1" tabpos="3">
 		<Cursor position="9722" topLine="428" />

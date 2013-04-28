@@ -9,7 +9,8 @@ ToolsMenu::ToolsMenu(bool flag):
     bRectangule("Rectangule"),
     bPentagono("Pentagono"),
     bHexagono("Hexagono"),
-    bHeptagono("Heptagono")
+    bHeptagono("Heptagono"),
+    bSpline("Spline")
 
 {
     Gtk::Image *image = new Gtk::Image("line.png");
