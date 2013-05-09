@@ -1,20 +1,75 @@
 #include "../include/ToolsMenu.h"
 
 ToolsMenu::ToolsMenu(bool flag):
-    VBox(flag, 8),
-    bLine("Line"),
-    bCircle("Circle"),
-    bElipse("Elipse"),
-    bTriangulo("Triangule"),
-    bRectangule("Rectangule"),
-    bPentagono("Pentagono"),
-    bHexagono("Hexagono"),
-    bHeptagono("Heptagono"),
-    bSpline("Spline")
-
+    HBox(flag, 12)
 {
-    Gtk::Image *image = new Gtk::Image("line.png");
+    /** Inserción de iconos**/
 
+    m_image=new Gtk::Image("icons/line.png");
+    bLine.set_image_position(Gtk::POS_LEFT);
+    bLine.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/circle.png");
+
+    bCircle.set_image_position(Gtk::POS_LEFT);
+    bCircle.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/elipse.png");
+
+    bElipse.set_image_position(Gtk::POS_LEFT);
+    bElipse.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/triangle.png");
+
+    bTriangulo.set_image_position(Gtk::POS_LEFT);
+    bTriangulo.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/rectangle.png");
+
+    bRectangule.set_image_position(Gtk::POS_LEFT);
+    bRectangule.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/pentagon.png");
+
+    bPentagono.set_image_position(Gtk::POS_LEFT);
+    bPentagono.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/hexagon.png");
+
+    bHexagono.set_image_position(Gtk::POS_LEFT);
+    bHexagono.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/octagon.png");
+
+    bHeptagono.set_image_position(Gtk::POS_LEFT);
+    bHeptagono.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/spline.png");
+
+    bSpline.set_image_position(Gtk::POS_LEFT);
+    bSpline.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/pencil.png");
+
+    bPencil.set_image_position(Gtk::POS_LEFT);
+    bPencil.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/spray.png");
+
+    bSpray.set_image_position(Gtk::POS_LEFT);
+    bSpray.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/eraser.png");
+
+    bEraser.set_image_position(Gtk::POS_LEFT);
+    bEraser.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/paintCan.png");
+
+    bFlood.set_image_position(Gtk::POS_LEFT);
+    bFlood.set_image(*m_image);
+
+    m_image=new Gtk::Image("icons/colorPalette.png");
 
     bLine.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonLine));
     bCircle.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonCircle));
@@ -25,10 +80,10 @@ ToolsMenu::ToolsMenu(bool flag):
     bHexagono.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonHexagono));
     bHeptagono.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonHeptagono));
     bSpline.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonSpline));
-
-    bLine.set_image_position(Gtk::POS_LEFT);
-    bLine.set_image(*image);
-    bLine.show();
+    bPencil.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonPencil));
+    bEraser.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonEraser));
+    bSpray.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonSpray));
+    bFlood.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonFlood));
 
     pack_start(bLine);
     pack_start(bCircle);
@@ -39,6 +94,12 @@ ToolsMenu::ToolsMenu(bool flag):
     pack_start(bHexagono);
     pack_start(bHeptagono);
     pack_start(bSpline);
+    pack_start(bPencil);
+    pack_start(bEraser);
+    pack_start(bSpray);
+    pack_start(bFlood);
+    pack_start(*m_image);
+    pack_start(colorWhell);
 
 }
 
@@ -90,4 +151,35 @@ void ToolsMenu::onButtonHeptagono ()
 void ToolsMenu::onButtonSpline ()
 {
     figura = SPLINE;
+}
+
+void ToolsMenu::onButtonPencil ()
+{
+    figura = PENCIL;
+}
+
+void ToolsMenu::onButtonEraser ()
+{
+    figura = ERASER;
+}
+
+void ToolsMenu::onButtonSpray ()
+{
+    figura = SPRAY;
+}
+
+void ToolsMenu::onButtonFlood()
+{
+    figura = FLOOD;
+}
+
+GLfloat* ToolsMenu::getColor()
+{
+    Gdk::Color newColor = colorWhell.get_color();
+
+    color[0] = newColor.get_red()  /65535.0;
+    color[1] = newColor.get_green()/65535.0;
+    color[2] = newColor.get_blue() /65535.0;
+
+    return color;
 }

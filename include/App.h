@@ -11,21 +11,17 @@
 
 class App : public Gtk::Window
 {
-public:
-  App();
-  virtual ~App();
+    public:
+        App();
+        virtual ~App();
 
-protected:
-  // signal handlers:
-  void on_button_quit_clicked();
+    protected:
+        // member widgets:
+        DrawingOpenGL GL;
 
-protected:
-  // member widgets:
-  DrawingOpenGL GL;
-
-  Gtk::HBox box;
-  Gtk::Button buttonQuit;
-  ToolsMenu toolsMenu;
+        Gtk::VBox box;
+        Gtk::Button buttonQuit;
+        ToolsMenu toolsMenu;
 };
 
 

@@ -5,7 +5,6 @@
 #include <gtkglmm.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "Line.h"
 
 enum{
     LINE,
@@ -16,17 +15,23 @@ enum{
     PENTAGONO,
     HEXAGONO,
     HEPTAGONO,
-    SPLINE
+    SPLINE,
+    PENCIL,
+    SPRAY,
+    ERASER,
+    FLOOD
 };
 
 class ToolsMenu:
-    public Gtk::VBox
+    public Gtk::HBox
 {
     public:
         ToolsMenu(bool);
         virtual ~ToolsMenu();
         /** Members **/
         int figura;
+        GLfloat color[3];
+        GLfloat* getColor ();
 
     protected:
 
@@ -40,6 +45,13 @@ class ToolsMenu:
         Gtk::Button bHexagono;
         Gtk::Button bHeptagono;
         Gtk::Button bSpline;
+        Gtk::Button bPencil;
+        Gtk::Button bSpray;
+        Gtk::Button bEraser;
+        Gtk::Button bFlood;
+        Gtk::Image* m_image;
+        Gtk::ColorButton colorWhell;
+
 
         /** Metodos **/
         void onButtonLine();
@@ -51,8 +63,11 @@ class ToolsMenu:
         void onButtonHexagono ();
         void onButtonHeptagono ();
         void onButtonSpline ();
+        void onButtonPencil ();
+        void onButtonEraser ();
+        void onButtonSpray ();
+        void onButtonFlood ();
 
-    private:
 };
 
 #endif // TOOLSMENU_H

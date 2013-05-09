@@ -5691,12 +5691,11 @@
 1366421561 source:/home/omar/Documents/ProyectoCC312/src/Point.cpp
 	"../include/Point.h"
 
-1366420958 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/main.cpp
+1368119018 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/main.cpp
 	<gtkmm.h>
 	<gtkglmm.h>
 	<GL/gl.h>
 	<GL/glu.h>
-	<iostream>
 	"include/drawingOpenGL.h"
 	"include/App.h"
 
@@ -5725,20 +5724,20 @@
 
 1343035910 /usr/lib64/gtkglext-1.0/include/gdkglext-config.h
 
-1366464696 /home/omar/Documents/Code::Blocks workspace/ProyectoCC312/include/drawingOpenGL.h
+1368138087 /home/omar/Documents/Code::Blocks workspace/ProyectoCC312/include/drawingOpenGL.h
 	<gtkmm.h>
 	<gtkglmm.h>
 	<GL/gl.h>
 	<GL/glu.h>
+	<queue>
 	"ToolsMenu.h"
 	"Point.h"
 
-1366463802 /home/omar/Documents/Code::Blocks workspace/ProyectoCC312/include/ToolsMenu.h
+1368136423 /home/omar/Documents/Code::Blocks workspace/ProyectoCC312/include/ToolsMenu.h
 	<gtkmm.h>
 	<gtkglmm.h>
 	<GL/gl.h>
 	<GL/glu.h>
-	"Line.h"
 
 1366402730 /home/omar/Documents/Code::Blocks workspace/ProyectoCC312/include/Line.h
 	<GL/gl.h>
@@ -5751,7 +5750,7 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1366407554 /home/omar/Documents/Code::Blocks workspace/ProyectoCC312/include/App.h
+1368137530 /home/omar/Documents/Code::Blocks workspace/ProyectoCC312/include/App.h
 	<gtkmm.h>
 	<gtkglmm.h>
 	<GL/gl.h>
@@ -5759,15 +5758,15 @@
 	"ToolsMenu.h"
 	"drawingOpenGL.h"
 
-1366411504 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/App.cpp
+1368137530 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/App.cpp
 	"../include/App.h"
 
-1366421560 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/Point.cpp
+1367686803 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/Point.cpp
 	"../include/Point.h"
 
-1366463802 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/ToolsMenu.cpp
+1368135460 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/ToolsMenu.cpp
 	"../include/ToolsMenu.h"
 
-1366465400 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/drawingOpenGL.cpp
+1368140239 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/drawingOpenGL.cpp
 	"../include/drawingOpenGL.h"
 

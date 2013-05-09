@@ -5,13 +5,17 @@
 #include <gtkglmm.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <queue>
 #include "ToolsMenu.h"
 #include "Point.h"
 
-#define ANCHO 800
-#define ALTO  600
-
 // Simple OpenGL scene.
+
+enum{
+    R,
+    G,
+    B
+};
 
 class DrawingOpenGL :
     public Gtk::DrawingArea,
@@ -29,7 +33,8 @@ class DrawingOpenGL :
 
     protected:
         //atributos
-        int lienzo[ANCHO][ALTO];
+        GLint *lienzo;
+        GLfloat colorBackground[3];
 
         void on_realize();
         virtual bool on_expose_event(GdkEventExpose* event);
@@ -37,6 +42,9 @@ class DrawingOpenGL :
         virtual bool on_motion_notify_event(GdkEventMotion* event);
         virtual bool on_button_release_event(GdkEventButton* event);
         virtual bool on_configure_event (GdkEventConfigure*event);
+        virtual bool on_enter_notify_event (GdkEventCrossing*event);
+        void crearBufferPixeles();
+        bool on_timeout();
 
         /** Line **/
         void drawLine(GLint ,GLint , GLint , GLint );
@@ -59,6 +67,21 @@ class DrawingOpenGL :
         void drawSpline(GLint x, GLint y, GLint x1, GLint y1);
         void spline();
 
+        /** Pencil **/
+        void drawWithPencil(GLint x, GLint y);
+
+        /** Eraser **/
+        void erase(GLint x, GLint y);
+
+        /** Spray **/
+        void drawWithSpray(GLint x, GLint y);
+
+        /** Flood **/
+        void flood(GLint ,GLint );
+        bool compareColors(GLfloat* ,GLfloat*);
+        unsigned char* getPixel(GLint, GLint);
+        GLfloat* normalize(unsigned char*);
+        bool comparePixels(GLfloat*, GLfloat*);
 };
 
 
