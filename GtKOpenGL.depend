@@ -5691,11 +5691,12 @@
 1366421561 source:/home/omar/Documents/ProyectoCC312/src/Point.cpp
 	"../include/Point.h"
 
-1368119018 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/main.cpp
+1368169828 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/main.cpp
 	<gtkmm.h>
 	<gtkglmm.h>
 	<GL/gl.h>
 	<GL/glu.h>
+	<iostream>
 	"include/drawingOpenGL.h"
 	"include/App.h"
 
@@ -5724,11 +5725,12 @@
 
 1343035910 /usr/lib64/gtkglext-1.0/include/gdkglext-config.h
 
-1368138087 /home/omar/Documents/Code::Blocks workspace/ProyectoCC312/include/drawingOpenGL.h
+1368169964 /home/omar/Documents/Code::Blocks workspace/ProyectoCC312/include/drawingOpenGL.h
 	<gtkmm.h>
 	<gtkglmm.h>
 	<GL/gl.h>
 	<GL/glu.h>
+	<iostream>
 	<queue>
 	"ToolsMenu.h"
 	"Point.h"
@@ -5767,6 +5769,6 @@
 1368135460 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/ToolsMenu.cpp
 	"../include/ToolsMenu.h"
 
-1368140239 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/drawingOpenGL.cpp
+1368262911 source:/home/omar/Documents/Code::Blocks workspace/ProyectoCC312/src/drawingOpenGL.cpp
 	"../include/drawingOpenGL.h"
 

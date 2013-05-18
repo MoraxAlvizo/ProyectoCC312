@@ -4,28 +4,28 @@
 	<File name="include/App.h" open="1" top="0" tabpos="2">
 		<Cursor position="399" topLine="6" />
 	</File>
-	<File name="include/Point.h" open="0" top="0" tabpos="9">
-		<Cursor position="409" topLine="11" />
+	<File name="include/Point.h" open="1" top="0" tabpos="8">
+		<Cursor position="409" topLine="5" />
 	</File>
 	<File name="include/ToolsMenu.h" open="1" top="0" tabpos="4">
 		<Cursor position="1008" topLine="36" />
 	</File>
 	<File name="include/drawingOpenGL.h" open="1" top="0" tabpos="6">
-		<Cursor position="1065" topLine="58" />
+		<Cursor position="149" topLine="0" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="78" topLine="0" />
+		<Cursor position="100" topLine="0" />
 	</File>
 	<File name="src/App.cpp" open="1" top="0" tabpos="3">
 		<Cursor position="103" topLine="0" />
 	</File>
-	<File name="src/Point.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="441" topLine="30" />
+	<File name="src/Point.cpp" open="1" top="0" tabpos="9">
+		<Cursor position="441" topLine="36" />
 	</File>
 	<File name="src/ToolsMenu.cpp" open="1" top="0" tabpos="5">
 		<Cursor position="88" topLine="63" />
 	</File>
 	<File name="src/drawingOpenGL.cpp" open="1" top="1" tabpos="7">
-		<Cursor position="1546" topLine="58" />
+		<Cursor position="14568" topLine="633" />
 	</File>
 </CodeBlocks_layout_file>

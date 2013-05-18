@@ -2,10 +2,6 @@
 
 DrawingOpenGL::DrawingOpenGL(ToolsMenu* menu)
 {
-
-    // ==============================
-    //  Lienzo OpenGL
-    // ==============================
     Glib::RefPtr<Gdk::GL::Config> glconfig;
     this->drawing = -1;
     this->primerPintado = true;
@@ -213,7 +209,7 @@ bool DrawingOpenGL::on_motion_notify_event(GdkEventMotion* event) {
 
 bool DrawingOpenGL::on_button_release_event(GdkEventButton* event){
 
-    GLint w = get_width(), h = get_height();
+    GLint h = get_height();
     this->drawing = false;
 
     switch(menu->figura){
@@ -627,22 +623,28 @@ void DrawingOpenGL::flood(GLint x,GLint y){
     GLfloat *pixel, *previousPixel;
     std::queue<Point*> queuePoints;
     Point *nextPoint;
+    GLint rightmost = 0, leftmost = 0;
 
     queuePoints.push(new Point(x,y));
     glColor3fv(menu->getColor());
 
     while(!queuePoints.empty()){
+
+        rightmost = 0;
+        leftmost = 0;
+
         nextPoint = queuePoints.front();
         pixel = normalize(getPixel(nextPoint->getX(),nextPoint->getY()));
         previousPixel = normalize(getPixel(nextPoint->getX() - 1,nextPoint->getY() - 1 ));
+
         if(compareColors(pixel, previousPixel)){
 
             nextPoint->drawPoint();
 
-            queuePoints.push(new Point(nextPoint->getX()+1, nextPoint->getY()  ));
-            queuePoints.push(new Point(nextPoint->getX()-1, nextPoint->getY()  ));
             queuePoints.push(new Point(nextPoint->getX()  , nextPoint->getY()+1));
             queuePoints.push(new Point(nextPoint->getX()  , nextPoint->getY()-1));
+            queuePoints.push(new Point(nextPoint->getX()+1, nextPoint->getY()  ));
+            queuePoints.push(new Point(nextPoint->getX()-1, nextPoint->getY()  ));
 
         }
 

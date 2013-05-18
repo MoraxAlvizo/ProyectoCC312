@@ -5,6 +5,7 @@
 #include <gtkglmm.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <iostream>
 #include <queue>
 #include "ToolsMenu.h"
 #include "Point.h"
