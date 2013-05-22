@@ -69,6 +69,11 @@ ToolsMenu::ToolsMenu(bool flag):
     bFlood.set_image_position(Gtk::POS_LEFT);
     bFlood.set_image(*m_image);
 
+    m_image=new Gtk::Image("icons/cut.png");
+
+    bRecortar.set_image_position(Gtk::POS_LEFT);
+    bRecortar.set_image(*m_image);
+
     m_image=new Gtk::Image("icons/colorPalette.png");
 
     bLine.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonLine));
@@ -84,6 +89,7 @@ ToolsMenu::ToolsMenu(bool flag):
     bEraser.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonEraser));
     bSpray.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonSpray));
     bFlood.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonFlood));
+    bRecortar.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonRecortar));
 
     pack_start(bLine);
     pack_start(bCircle);
@@ -98,6 +104,7 @@ ToolsMenu::ToolsMenu(bool flag):
     pack_start(bEraser);
     pack_start(bSpray);
     pack_start(bFlood);
+    pack_start(bRecortar);
     pack_start(*m_image);
     pack_start(colorWhell);
 
@@ -171,6 +178,11 @@ void ToolsMenu::onButtonSpray ()
 void ToolsMenu::onButtonFlood()
 {
     figura = FLOOD;
+}
+
+void ToolsMenu::onButtonRecortar()
+{
+    figura = RECORTAR;
 }
 
 GLfloat* ToolsMenu::getColor()

@@ -7,6 +7,9 @@ DrawingOpenGL::DrawingOpenGL(ToolsMenu* menu)
     this->primerPintado = true;
     this->menu = menu;
     this->clicks = 0;
+    this->move = false;
+    this->cut = NULL;
+
 
     colorBackground[R] = 1.0;
     colorBackground[G] = 1.0;
@@ -83,6 +86,8 @@ bool DrawingOpenGL::on_configure_event(GdkEventConfigure*event){
     glFlush();
 	gldrawable->gl_end();
 
+	glEnable(GL_LINE_STIPPLE);
+
 	return TRUE;
 
 }
@@ -127,7 +132,7 @@ bool DrawingOpenGL::on_button_press_event(GdkEventButton* event) {
     this->x = event->x;
     this->y = h - event->y;
     this->drawing = true;
-    if(menu->figura!= SPLINE || this->clicks == 0)
+    if( (menu->figura!= SPLINE && menu->figura!=RECORTAR) || this->clicks == 0 )
         glReadPixels(0,0,w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
 
     switch(menu->figura){
@@ -143,6 +148,19 @@ bool DrawingOpenGL::on_button_press_event(GdkEventButton* event) {
         case FLOOD:
             flood(event->x, h-event->y);
             break;
+        case RECORTAR:
+
+            if(this->move && (this->x < xInicial || this->x > xFinal || this->y < yInicial || this->y > yFinal)){
+                glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
+                glRasterPos2i(xRectIni,yRectIni);
+                glDrawPixels(abs(xInicial - xFinal), abs(yInicial - yFinal), GL_RGB, GL_UNSIGNED_BYTE, cut);
+                glRasterPos2i(0,0);
+                glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, lienzo);
+                this->clicks = 0;
+                this->move=false;
+
+            }
+            break;
     }
 
     glFlush();
@@ -157,7 +175,7 @@ bool DrawingOpenGL::on_motion_notify_event(GdkEventMotion* event) {
 
     if(event->state & GDK_BUTTON1_MASK){
 
-        if(menu->figura != PENCIL && menu->figura != ERASER && menu->figura != SPRAY && menu->figura != FLOOD)
+        if(menu->figura != PENCIL && menu->figura != ERASER && menu->figura != SPRAY && menu->figura != FLOOD )
             glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
         glColor3fv(menu->getColor());
 
@@ -198,18 +216,31 @@ bool DrawingOpenGL::on_motion_notify_event(GdkEventMotion* event) {
         case SPRAY:
             drawWithSpray(event->x, h-event->y);
             break;
+        case RECORTAR:
+            glColor3i(120,120,120);
+            recortar(event->x, h-event->y);
+            break;
         }
 
         glFlush();
 
     }
 
+
     return true;
 }
 
 bool DrawingOpenGL::on_button_release_event(GdkEventButton* event){
 
-    GLint h = get_height();
+    Glib::RefPtr<Gdk::GL::Context>  context;
+	Glib::RefPtr<Gdk::GL::Drawable> gldrawable;
+    GLint w = get_width(), h = get_height();
+    GLint yReal = h - event->y;
+
+    context = get_gl_context();
+	gldrawable = get_gl_drawable();
+	gldrawable->gl_begin(context);
+
     this->drawing = false;
 
     switch(menu->figura){
@@ -219,10 +250,47 @@ bool DrawingOpenGL::on_button_release_event(GdkEventButton* event){
         case SPLINE:
             this->clicks++;
             break;
+        case RECORTAR:
+            this->clicks++;
+            if(!this->move){
+                glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
+                delete cut;
+                cut = new GLint [abs(this->x - event->x)*abs(this->y - yReal)];
+                glReadPixels(xRectIni, yRectIni , xRectFinal- xRectIni, yRectFinal - yRectIni, GL_RGB, GL_UNSIGNED_BYTE, cut);
+                glColor3f(1.0, 1.0, 1.0);
+                glBegin(GL_QUAD_STRIP);
+                    glVertex2i(this->x  , this->y );
+                    glVertex2i(this->x  , yReal);
+                    glVertex2i(event->x , this->y );
+                    glVertex2i(event->x , yReal);
+                glEnd();
+                glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, lienzo);
+                this->move = true;
+                this->x = 0;
+                this->y = 0;
+                glColor3i(120,120,120);
+                recortar(0, 0);
+
+            }
+            else{
+                this->move = false;
+
+                glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
+                glRasterPos2i(xRectIni,yRectIni);
+                glDrawPixels(abs(xInicial - xFinal), abs(yInicial - yFinal), GL_RGB, GL_UNSIGNED_BYTE, cut);
+                glRasterPos2i(0,0);
+            }
+
+            break;
 
     }
 
-    if(this->clicks == 3)this->clicks = 0;
+    glFlush();
+    gldrawable -> gl_end();
+
+
+    if( (menu->figura == SPLINE && this->clicks == 3) || (menu->figura == RECORTAR && this->clicks == 2) )
+        this->clicks = 0;
     return true;
 }
 
@@ -240,6 +308,9 @@ bool DrawingOpenGL::on_enter_notify_event(GdkEventCrossing* event){
             break;
         case FLOOD:
             get_window()->set_cursor(Gdk::Cursor(Gdk::X_CURSOR ));
+            break;
+        case RECORTAR:
+            get_window()->set_cursor(Gdk::Cursor(Gdk::CROSS));
             break;
         default:
             get_window()->set_cursor(Gdk::Cursor(Gdk::TCROSS));
@@ -623,15 +694,11 @@ void DrawingOpenGL::flood(GLint x,GLint y){
     GLfloat *pixel, *previousPixel;
     std::queue<Point*> queuePoints;
     Point *nextPoint;
-    GLint rightmost = 0, leftmost = 0;
 
     queuePoints.push(new Point(x,y));
     glColor3fv(menu->getColor());
 
     while(!queuePoints.empty()){
-
-        rightmost = 0;
-        leftmost = 0;
 
         nextPoint = queuePoints.front();
         pixel = normalize(getPixel(nextPoint->getX(),nextPoint->getY()));
@@ -693,4 +760,114 @@ void DrawingOpenGL::crearBufferPixeles(){
     GLint w = get_width(), h = get_height();
     lienzo = new GLint [w*h];
 }
+
+ void DrawingOpenGL::recortar(GLint x, GLint y){
+    GLint w = get_width(), h = get_height();
+
+    if(!this->move){
+
+        if(this->x > x){
+            if(x < 0)
+                xInicial = 1;
+            else
+                xInicial = x;
+            xFinal = this->x;
+        }
+        else{
+            if(x > w)
+                xFinal = w;
+            else
+                xFinal = x;
+            xInicial = this->x;
+        }
+
+        if(this->y > y){
+            if(y < 0)
+                yInicial = 1;
+            else
+                yInicial = y;
+            yFinal = this->y;
+        }
+        else{
+            if(y > h)
+                yFinal = h-1;
+            else
+                yFinal = y;
+            yInicial = this->y;
+        }
+
+        xRectIni = xInicial;
+        yRectIni = yInicial;
+        xRectFinal = xFinal;
+        yRectFinal = yFinal;
+
+    }
+    else{
+
+        diferenciaX = this->x - x;
+        diferenciaY = this->y - y;
+
+        validarArea();
+
+        glRasterPos2f(xRectIni,yRectIni);
+        glDrawPixels(abs(xInicial - xFinal), abs(yInicial - yFinal), GL_RGB, GL_UNSIGNED_BYTE, cut);
+        glRasterPos2f(0,0);
+
+
+    }
+    glLineStipple(2, 0x00FF);
+    glBegin(GL_LINES);
+        // linea 1
+        glVertex2i(xRectIni  , yRectIni);
+        glVertex2i(xRectFinal, yRectIni);
+        // linea 2
+        glVertex2i(xRectIni  , yRectFinal);
+        glVertex2i(xRectFinal, yRectFinal);
+        //linea 3
+        glVertex2i(xRectIni  , yRectIni);
+        glVertex2i(xRectIni  , yRectFinal);
+        //linea 4
+        glVertex2i(xRectFinal, yRectFinal);
+        glVertex2i(xRectFinal, yRectIni);
+
+    glEnd();
+
+
+ }
+
+ void DrawingOpenGL::validarArea(){
+
+    GLint w = get_width(), h = get_height();
+
+    /** Validacion del area en las 'x' **/
+
+    if( (xInicial - diferenciaX) < 0 ){
+        xRectIni = 1;
+        xRectFinal = xFinal - xInicial;
+    }
+    else if((xFinal - diferenciaX ) > w){
+        xRectFinal = w;
+        xRectIni = w - (xFinal - xInicial);
+    }
+    else{
+        xRectIni = xInicial - diferenciaX;
+        xRectFinal = xFinal - diferenciaX;
+    }
+
+    /** Validacion del area en las 'y' **/
+
+    if( (yInicial - diferenciaY) < 0 ){
+        yRectIni = 1;
+        yRectFinal = yFinal - yInicial;
+    }
+    else if((yFinal - diferenciaY ) > h){
+        yRectFinal = h-1;
+        yRectIni = h - (yFinal - yInicial);
+    }
+    else{
+        yRectIni = yInicial - diferenciaY;
+        yRectFinal = yFinal - diferenciaY;
+    }
+
+ }
 

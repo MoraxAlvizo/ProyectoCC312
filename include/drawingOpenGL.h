@@ -26,15 +26,17 @@ class DrawingOpenGL :
         DrawingOpenGL(ToolsMenu* );
         virtual ~DrawingOpenGL();
         bool primerPintado;
-        int x,y,x1,y1;
+        GLint x,y;
         int drawing;
         short clicks;
+        bool move;
         ToolsMenu* menu;
 
 
     protected:
         //atributos
         GLint *lienzo;
+        GLint *cut;
         GLfloat colorBackground[3];
 
         void on_realize();
@@ -83,6 +85,13 @@ class DrawingOpenGL :
         unsigned char* getPixel(GLint, GLint);
         GLfloat* normalize(unsigned char*);
         bool comparePixels(GLfloat*, GLfloat*);
+
+        /** Recortar **/
+        void recortar(GLint x, GLint y);
+        void validarArea();
+        GLint xInicial, yInicial, xFinal, yFinal;
+        GLint diferenciaX, diferenciaY;
+        GLint xRectIni, yRectIni, xRectFinal, yRectFinal;
 };
 
 

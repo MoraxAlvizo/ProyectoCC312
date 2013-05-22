@@ -19,7 +19,8 @@ enum{
     PENCIL,
     SPRAY,
     ERASER,
-    FLOOD
+    FLOOD,
+    RECORTAR
 };
 
 class ToolsMenu:
@@ -49,6 +50,7 @@ class ToolsMenu:
         Gtk::Button bSpray;
         Gtk::Button bEraser;
         Gtk::Button bFlood;
+        Gtk::Button bRecortar;
         Gtk::Image* m_image;
         Gtk::ColorButton colorWhell;
 
@@ -67,6 +69,7 @@ class ToolsMenu:
         void onButtonEraser ();
         void onButtonSpray ();
         void onButtonFlood ();
+        void onButtonRecortar ();
 
 };
 
