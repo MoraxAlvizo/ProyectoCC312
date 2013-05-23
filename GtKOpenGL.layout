@@ -8,10 +8,10 @@
 		<Cursor position="409" topLine="10" />
 	</File>
 	<File name="include/ToolsMenu.h" open="1" top="0" tabpos="4">
-		<Cursor position="1534" topLine="0" />
+		<Cursor position="1534" topLine="15" />
 	</File>
 	<File name="include/drawingOpenGL.h" open="1" top="0" tabpos="6">
-		<Cursor position="2483" topLine="74" />
+		<Cursor position="2402" topLine="6" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="100" topLine="0" />
@@ -23,9 +23,9 @@
 		<Cursor position="441" topLine="36" />
 	</File>
 	<File name="src/ToolsMenu.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="3234" topLine="171" />
+		<Cursor position="88" topLine="0" />
 	</File>
 	<File name="src/drawingOpenGL.cpp" open="1" top="1" tabpos="7">
-		<Cursor position="19749" topLine="0" />
+		<Cursor position="3049" topLine="125" />
 	</File>
 </CodeBlocks_layout_file>

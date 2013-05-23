@@ -132,6 +132,10 @@ bool DrawingOpenGL::on_button_press_event(GdkEventButton* event) {
     this->x = event->x;
     this->y = h - event->y;
     this->drawing = true;
+
+    if(this->move)
+        glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
+
     if( (menu->figura!= SPLINE && menu->figura!=RECORTAR) || this->clicks == 0 )
         glReadPixels(0,0,w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
 
@@ -149,8 +153,8 @@ bool DrawingOpenGL::on_button_press_event(GdkEventButton* event) {
             flood(event->x, h-event->y);
             break;
         case RECORTAR:
-
             if(this->move && (this->x < xInicial || this->x > xFinal || this->y < yInicial || this->y > yFinal)){
+
                 glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
                 glRasterPos2i(xRectIni,yRectIni);
                 glDrawPixels(abs(xInicial - xFinal), abs(yInicial - yFinal), GL_RGB, GL_UNSIGNED_BYTE, cut);
@@ -252,7 +256,8 @@ bool DrawingOpenGL::on_button_release_event(GdkEventButton* event){
             break;
         case RECORTAR:
             this->clicks++;
-            if(!this->move){
+
+            if(!this->move && this->x != event->x && this->y != yReal){
                 glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
                 delete cut;
                 cut = new GLint [abs(this->x - event->x)*abs(this->y - yReal)];
@@ -280,6 +285,7 @@ bool DrawingOpenGL::on_button_release_event(GdkEventButton* event){
                 glDrawPixels(abs(xInicial - xFinal), abs(yInicial - yFinal), GL_RGB, GL_UNSIGNED_BYTE, cut);
                 glRasterPos2i(0,0);
             }
+
 
             break;
 
@@ -770,7 +776,7 @@ void DrawingOpenGL::crearBufferPixeles(){
             if(x < 0)
                 xInicial = 1;
             else
-                xInicial = x;
+                xInicial = x - 1;
             xFinal = this->x;
         }
         else{
@@ -785,7 +791,7 @@ void DrawingOpenGL::crearBufferPixeles(){
             if(y < 0)
                 yInicial = 1;
             else
-                yInicial = y;
+                yInicial = y + 1;
             yFinal = this->y;
         }
         else{
