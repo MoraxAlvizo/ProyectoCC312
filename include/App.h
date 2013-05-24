@@ -22,9 +22,11 @@ class App : public Gtk::Window
         Gtk::VBox box;
         Gtk::Button bOpen;
         Gtk::Button bSave;
+        Gtk::Button bNew;
         ToolsMenu toolsMenu;
         void onButtonOpen ();
         void onButtonSave ();
+        void onButtonNew ();
 };
 
 

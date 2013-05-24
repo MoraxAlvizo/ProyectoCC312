@@ -880,14 +880,32 @@ void DrawingOpenGL::crearBufferPixeles(){
 
 void DrawingOpenGL::saveImage(){
 
-    bmpManager = new BMP(get_width(),get_height());
-    bmpManager->guardarBMP("test.bmp");
-    delete bmpManager;
+
+    Gtk::FileChooserDialog dialog("Save as",Gtk::FILE_CHOOSER_ACTION_SAVE);
+
+    //Add response buttons the the dialog:
+    dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    dialog.add_button("Save as", Gtk::RESPONSE_OK);
+
+    int result = dialog.run();
+
+    //Handle the response:
+    switch(result)
+    {
+        case Gtk::RESPONSE_OK:
+
+            bmpManager = new BMP(get_width(),get_height());
+            bmpManager->guardarBMP(dialog.get_filename().c_str());
+            delete bmpManager;
+            break;
+
+    }
+
 }
 
  void DrawingOpenGL::openImage(){
 
-    Gtk::FileChooserDialog dialog("Please choose a file", Gtk::FILE_CHOOSER_ACTION_OPEN);
+    Gtk::FileChooserDialog dialog("Open file", Gtk::FILE_CHOOSER_ACTION_OPEN);
     std::string openFile;
 
     //Add response buttons the the dialog:
@@ -909,6 +927,30 @@ void DrawingOpenGL::saveImage(){
 
     }
 
+
+ }
+
+ void DrawingOpenGL::newImage(){
+
+    Glib::RefPtr<Gdk::GL::Context>  context;
+	Glib::RefPtr<Gdk::GL::Drawable> gldrawable;
+	gint w = get_width(), h = get_height();
+
+	context = get_gl_context();
+	gldrawable = get_gl_drawable();
+
+	if (!gldrawable->gl_begin(context)){
+		g_assert_not_reached ();
+	}
+
+    glClear(GL_COLOR_BUFFER_BIT);
+    primerPintado = false;
+    crearBufferPixeles();
+    glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, lienzo);
+
+
+    glFlush();
+	gldrawable -> gl_end();
 
  }
 

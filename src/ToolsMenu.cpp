@@ -1,6 +1,6 @@
 #include "../include/ToolsMenu.h"
 
-ToolsMenu::ToolsMenu(bool flag, Gtk::Button* bOpen, Gtk::Button* bSave):
+ToolsMenu::ToolsMenu(bool flag, Gtk::Button* bOpen, Gtk::Button* bSave, Gtk::Button* bNew):
     HBox(flag, 12)
 {
     /** Inserción de iconos**/
@@ -91,6 +91,10 @@ ToolsMenu::ToolsMenu(bool flag, Gtk::Button* bOpen, Gtk::Button* bSave):
     bFlood.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonFlood));
     bRecortar.signal_clicked().connect(sigc::mem_fun(*this, &ToolsMenu::onButtonRecortar));
 
+    pack_start(*bOpen);
+    pack_start(*bSave);
+    pack_start(*bNew);
+
     pack_start(bLine);
     pack_start(bCircle);
     pack_start(bElipse);
@@ -105,8 +109,7 @@ ToolsMenu::ToolsMenu(bool flag, Gtk::Button* bOpen, Gtk::Button* bSave):
     pack_start(bSpray);
     pack_start(bFlood);
     pack_start(bRecortar);
-    pack_start(*bOpen);
-    pack_start(*bSave);
+
     pack_start(*m_image);
     pack_start(colorWhell);
 

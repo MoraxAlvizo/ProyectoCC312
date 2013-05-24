@@ -36,6 +36,7 @@ class DrawingOpenGL :
         /** Guardad, Abrir y nuevo**/
         void saveImage();
         void openImage();
+        void newImage();
 
 
     protected:
