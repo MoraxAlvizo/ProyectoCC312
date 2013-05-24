@@ -1,6 +1,6 @@
 #include "../include/ToolsMenu.h"
 
-ToolsMenu::ToolsMenu(bool flag):
+ToolsMenu::ToolsMenu(bool flag, Gtk::Button* bOpen, Gtk::Button* bSave):
     HBox(flag, 12)
 {
     /** Inserción de iconos**/
@@ -105,6 +105,8 @@ ToolsMenu::ToolsMenu(bool flag):
     pack_start(bSpray);
     pack_start(bFlood);
     pack_start(bRecortar);
+    pack_start(*bOpen);
+    pack_start(*bSave);
     pack_start(*m_image);
     pack_start(colorWhell);
 

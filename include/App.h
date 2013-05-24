@@ -20,8 +20,11 @@ class App : public Gtk::Window
         DrawingOpenGL GL;
 
         Gtk::VBox box;
-        Gtk::Button buttonQuit;
+        Gtk::Button bOpen;
+        Gtk::Button bSave;
         ToolsMenu toolsMenu;
+        void onButtonOpen ();
+        void onButtonSave ();
 };
 
 

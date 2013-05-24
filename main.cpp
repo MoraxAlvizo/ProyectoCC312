@@ -6,6 +6,7 @@
 
 using namespace std;
 
+#include "include/ToolsMenu.h"
 #include "include/drawingOpenGL.h"
 #include "include/App.h"
 

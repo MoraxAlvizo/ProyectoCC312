@@ -136,7 +136,7 @@ bool DrawingOpenGL::on_button_press_event(GdkEventButton* event) {
     if(this->move)
         glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
 
-    if( (menu->figura!= SPLINE && menu->figura!=RECORTAR) || this->clicks == 0 )
+    if( (menu->figura!= SPLINE && menu->figura!=RECORTAR) || (this->clicks == 0 && !this->move) )
         glReadPixels(0,0,w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
 
     switch(menu->figura){
@@ -179,7 +179,7 @@ bool DrawingOpenGL::on_motion_notify_event(GdkEventMotion* event) {
 
     if(event->state & GDK_BUTTON1_MASK){
 
-        if(menu->figura != PENCIL && menu->figura != ERASER && menu->figura != SPRAY && menu->figura != FLOOD )
+        if(menu->figura != PENCIL && menu->figura != ERASER && menu->figura != SPRAY && menu->figura != FLOOD)
             glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
         glColor3fv(menu->getColor());
 
@@ -284,6 +284,7 @@ bool DrawingOpenGL::on_button_release_event(GdkEventButton* event){
                 glRasterPos2i(xRectIni,yRectIni);
                 glDrawPixels(abs(xInicial - xFinal), abs(yInicial - yFinal), GL_RGB, GL_UNSIGNED_BYTE, cut);
                 glRasterPos2i(0,0);
+                glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, lienzo);
             }
 
 
@@ -874,6 +875,40 @@ void DrawingOpenGL::crearBufferPixeles(){
         yRectIni = yInicial - diferenciaY;
         yRectFinal = yFinal - diferenciaY;
     }
+
+ }
+
+void DrawingOpenGL::saveImage(){
+
+    bmpManager = new BMP(get_width(),get_height());
+    bmpManager->guardarBMP("test.bmp");
+    delete bmpManager;
+}
+
+ void DrawingOpenGL::openImage(){
+
+    Gtk::FileChooserDialog dialog("Please choose a file", Gtk::FILE_CHOOSER_ACTION_OPEN);
+    std::string openFile;
+
+    //Add response buttons the the dialog:
+    dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    dialog.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
+
+    //Show the dialog and wait for a user response:
+    int result = dialog.run();
+
+    //Handle the response:
+    switch(result)
+    {
+        case Gtk::RESPONSE_OK :
+            bmpManager = new BMP(get_width(),get_height());
+            openFile = dialog.get_filename();
+            bmpManager->abrirBMP(openFile.c_str());
+            delete bmpManager;
+            break;
+
+    }
+
 
  }
 

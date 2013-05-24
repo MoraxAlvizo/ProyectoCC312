@@ -9,6 +9,7 @@
 #include <queue>
 #include "ToolsMenu.h"
 #include "Point.h"
+#include "BMP.h"
 
 // Simple OpenGL scene.
 
@@ -32,12 +33,17 @@ class DrawingOpenGL :
         bool move;
         ToolsMenu* menu;
 
+        /** Guardad, Abrir y nuevo**/
+        void saveImage();
+        void openImage();
+
 
     protected:
         //atributos
         GLint *lienzo;
         GLint *cut;
         GLfloat colorBackground[3];
+        BMP *bmpManager;
 
         void on_realize();
         virtual bool on_expose_event(GdkEventExpose* event);
@@ -92,6 +98,8 @@ class DrawingOpenGL :
         GLint xInicial, yInicial, xFinal, yFinal;
         GLint diferenciaX, diferenciaY;
         GLint xRectIni, yRectIni, xRectFinal, yRectFinal;
+
+
 };
 
 

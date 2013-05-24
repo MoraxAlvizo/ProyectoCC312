@@ -5823,3 +5823,65 @@
 1369273354 source:/home/omar/Documentos/CodeBlocksWorkspace/ProyectoCC312/src/drawingOpenGL.cpp
 	"../include/drawingOpenGL.h"
 
+1369343544 source:/home/omar/Documentos/ProyectoCC312/main.cpp
+	<gtkmm.h>
+	<gtkglmm.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<iostream>
+	"include/ToolsMenu.h"
+	"include/drawingOpenGL.h"
+	"include/App.h"
+
+1369347060 /home/omar/Documentos/ProyectoCC312/include/drawingOpenGL.h
+	<gtkmm.h>
+	<gtkglmm.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<iostream>
+	<queue>
+	"ToolsMenu.h"
+	"Point.h"
+	"BMP.h"
+
+1369353424 /home/omar/Documentos/ProyectoCC312/include/ToolsMenu.h
+	<gtkmm.h>
+	<gtkglmm.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1369342661 /home/omar/Documentos/ProyectoCC312/include/Point.h
+	<GL/gl.h>
+	<GL/glu.h>
+
+1369353410 /home/omar/Documentos/ProyectoCC312/include/App.h
+	<gtkmm.h>
+	<gtkglmm.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	"ToolsMenu.h"
+	"drawingOpenGL.h"
+
+1369353441 source:/home/omar/Documentos/ProyectoCC312/src/App.cpp
+	"../include/App.h"
+
+1369342661 source:/home/omar/Documentos/ProyectoCC312/src/Point.cpp
+	"../include/Point.h"
+
+1369353436 source:/home/omar/Documentos/ProyectoCC312/src/ToolsMenu.cpp
+	"../include/ToolsMenu.h"
+
+1369353382 source:/home/omar/Documentos/ProyectoCC312/src/drawingOpenGL.cpp
+	"../include/drawingOpenGL.h"
+
+1369353801 /home/omar/Documentos/ProyectoCC312/include/BMP.h
+	<stdio.h>
+	<math.h>
+	<gtkmm.h>
+	<gtkglmm.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1369353801 source:/home/omar/Documentos/ProyectoCC312/src/BMP.cpp
+	"../include/BMP.h"
+

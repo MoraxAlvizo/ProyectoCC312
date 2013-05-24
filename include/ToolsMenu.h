@@ -27,7 +27,7 @@ class ToolsMenu:
     public Gtk::HBox
 {
     public:
-        ToolsMenu(bool);
+        ToolsMenu(bool, Gtk::Button*, Gtk::Button*);
         virtual ~ToolsMenu();
         /** Members **/
         int figura;

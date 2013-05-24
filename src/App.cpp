@@ -3,7 +3,9 @@
 App::App():
     GL(&toolsMenu),
     box(false, 3),
-    toolsMenu(false)
+    bOpen("Open"),
+    bSave("Save"),
+    toolsMenu(false, &bOpen, &bSave)
 {
     set_title("App");
 
@@ -11,6 +13,10 @@ App::App():
     set_reallocate_redraws(true);
     add(box);
     GL.set_size_request(1000, 600);
+
+    bOpen.signal_clicked().connect(sigc::mem_fun(*this, &App::onButtonOpen));
+    bSave.signal_clicked().connect(sigc::mem_fun(*this, &App::onButtonSave));
+
     box.pack_start(toolsMenu);
     box.pack_start(GL);
 
@@ -19,4 +25,15 @@ App::App():
 }
 
 App::~App()
-{}
+{
+
+}
+
+void App::onButtonOpen (){
+    GL.openImage();
+}
+
+void App::onButtonSave (){
+    GL.saveImage();
+
+}
