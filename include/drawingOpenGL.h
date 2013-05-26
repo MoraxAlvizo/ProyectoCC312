@@ -32,6 +32,7 @@ class DrawingOpenGL :
         short clicks;
         bool move;
         ToolsMenu* menu;
+        int figuraAnterior;
 
         /** Guardad, Abrir y nuevo**/
         void saveImage();

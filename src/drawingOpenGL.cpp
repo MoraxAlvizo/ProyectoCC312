@@ -124,21 +124,43 @@ bool DrawingOpenGL::on_button_press_event(GdkEventButton* event) {
     Glib::RefPtr<Gdk::GL::Context>  context;
 	Glib::RefPtr<Gdk::GL::Drawable> gldrawable;
     GLint w = get_width(), h = get_height();
+    GLfloat * pixel;
 
     context = get_gl_context();
 	gldrawable = get_gl_drawable();
 	gldrawable->gl_begin(context);
 
+	if(figuraAnterior != menu->figura && (figuraAnterior == RECORTAR || figuraAnterior == SPLINE) ){
+        glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
+        if(cut != NULL){
+            glRasterPos2i(xRectIni,yRectIni);
+            glDrawPixels(abs(xInicial - xFinal), abs(yInicial - yFinal), GL_RGB, GL_UNSIGNED_BYTE, cut);
+            glRasterPos2i(0,0);
+        }
+        this->clicks = 0;
+        this->move=false;
+	}
+
+    if(this->move){
+        glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
+        glRasterPos2i(xRectIni,yRectIni);
+        glDrawPixels(abs(xInicial - xFinal), abs(yInicial - yFinal), GL_RGB, GL_UNSIGNED_BYTE, cut);
+        glRasterPos2i(0,0);
+        this->move = true;
+        this->x = 0;
+        this->y = 0;
+        glColor3i(120,120,120);
+        recortar(0, 0);
+    }
+
     this->x = event->x;
     this->y = h - event->y;
     this->drawing = true;
 
-    if(this->move)
-        glDrawPixels(w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
 
     if( (menu->figura!= SPLINE && menu->figura!=RECORTAR) || (this->clicks == 0 && !this->move) )
         glReadPixels(0,0,w,h,GL_RGB,GL_UNSIGNED_BYTE,lienzo);
-
+    glColor3fv(menu->getColor());
     switch(menu->figura){
         case SPRAY:
             drawWithSpray(event->x, h-event->y);
@@ -150,6 +172,10 @@ bool DrawingOpenGL::on_button_press_event(GdkEventButton* event) {
             erase(event->x, h-event->y);
             break;
         case FLOOD:
+            pixel = normalize(getPixel(this->x,this->y));
+            colorBackground[0]= pixel[0];
+            colorBackground[1]= pixel[1];
+            colorBackground[2]= pixel[2];
             flood(event->x, h-event->y);
             break;
         case RECORTAR:
@@ -253,6 +279,8 @@ bool DrawingOpenGL::on_button_release_event(GdkEventButton* event){
             break;
         case SPLINE:
             this->clicks++;
+            if(this->clicks == 3)
+                glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, lienzo);
             break;
         case RECORTAR:
             this->clicks++;
@@ -294,7 +322,7 @@ bool DrawingOpenGL::on_button_release_event(GdkEventButton* event){
 
     glFlush();
     gldrawable -> gl_end();
-
+    figuraAnterior = menu->figura;
 
     if( (menu->figura == SPLINE && this->clicks == 3) || (menu->figura == RECORTAR && this->clicks == 2) )
         this->clicks = 0;
@@ -777,7 +805,7 @@ void DrawingOpenGL::crearBufferPixeles(){
             if(x < 0)
                 xInicial = 1;
             else
-                xInicial = x - 1;
+                xInicial = x;
             xFinal = this->x;
         }
         else{
@@ -792,7 +820,7 @@ void DrawingOpenGL::crearBufferPixeles(){
             if(y < 0)
                 yInicial = 1;
             else
-                yInicial = y + 1;
+                yInicial = y;
             yFinal = this->y;
         }
         else{
@@ -880,8 +908,7 @@ void DrawingOpenGL::crearBufferPixeles(){
 
 void DrawingOpenGL::saveImage(){
 
-
-    Gtk::FileChooserDialog dialog("Save as",Gtk::FILE_CHOOSER_ACTION_SAVE);
+   Gtk::FileChooserDialog dialog("Save as",Gtk::FILE_CHOOSER_ACTION_SAVE);
 
     //Add response buttons the the dialog:
     dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
@@ -905,6 +932,7 @@ void DrawingOpenGL::saveImage(){
 
  void DrawingOpenGL::openImage(){
 
+    GLint w = get_width(), h = get_height();
     Gtk::FileChooserDialog dialog("Open file", Gtk::FILE_CHOOSER_ACTION_OPEN);
     std::string openFile;
 
@@ -926,6 +954,7 @@ void DrawingOpenGL::saveImage(){
             break;
 
     }
+    glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, lienzo);
 
 
  }
@@ -947,10 +976,10 @@ void DrawingOpenGL::saveImage(){
     primerPintado = false;
     crearBufferPixeles();
     glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, lienzo);
-
+    delete cut;
+    cut = NULL;
 
     glFlush();
 	gldrawable -> gl_end();
 
  }
-
